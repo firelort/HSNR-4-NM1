@@ -1,20 +1,27 @@
 #include <iostream>
-#include <cmath>
 #include <iomanip>
 
 using namespace std;
 
-float functionFloat(int, int);
-
-double functionDouble(int, int);
+template <typename T>
+T calcBinom(int a, int bCounter) {
+    T result;
+    T b = 1;
+    for (int i = 1; i <= bCounter; i++) {
+        b /= 10;
+    }
+    result = (a + b) * (a + b) - a * a - 2 * a * b;
+    result /= b * b;
+    return result;
+}
 
 int main() {
     float floatResult[11];
     double doubleResult[11];
     int i;
     for (i = 0; i < 11; i++) {
-        floatResult[i] = functionFloat(1000, i);
-        doubleResult[i] = functionDouble(1000, i);
+        floatResult[i] = calcBinom<float>(1000, i);
+        doubleResult[i] = calcBinom<double>(1000, i);
     }
 
     cout << "--- Float Werte ---" << endl;
@@ -24,7 +31,7 @@ int main() {
         } else {
             cout << "-  |";
         }
-        cout << " i = " << setfill(' ') << setw(2) << i << ": " << setprecision(10) << floatResult[i] << endl;
+        cout << " i = " << setfill(' ') << setw(2) << i << ": " << floatResult[i] << endl;
     }
 
     cout << endl << endl << "--- Double Werte ---" << endl;
@@ -34,23 +41,7 @@ int main() {
         } else {
             cout << "-  |";
         }
-        cout << " i = " << setfill(' ') << setw(2) << i << ": " << setprecision(10) << doubleResult[i] << endl;
+        cout << " i = " << setfill(' ') << setw(2) << i << ": " << doubleResult[i] << endl;
     }
     return 0;
-}
-
-float functionFloat(int a, int bCounter) {
-    float result;
-    float b = pow(10, -bCounter);
-    result = pow(a + b, 2) - pow(a, 2) - 2 * a * b;
-    result /= pow(b, 2);
-    return result;
-}
-
-double functionDouble(int a, int bCounter) {
-    double result;
-    double b = pow(10, -bCounter);
-    result = (pow(a + b, 2) - pow(a, 2) - 2 * a * b);
-    result /= pow(b, 2);
-    return result;
 }
