@@ -12,6 +12,9 @@ void calcLim(int, int, int, int);
 template <typename T>
 T _calcLim(int, int);
 
+template <typename T>
+void test();
+
 int main() {
     int x = -20;
     auto a = calcTaylorSum<float>(x);
@@ -19,7 +22,11 @@ int main() {
     cout << "e^(" << x << ") with double: " << a << endl
          << "1 / e^" << -x << " with double: " << b << endl;
     calcLim<double>(x, 10000000, 1000000, 10000001);
-    cout << endl << endl << "--------" << endl << "With math.h is exp(" << x << ") = " << exp(x) << " and 1/exp(" << -x <<") = " << 1.0/exp(-x) << endl;
+    cout << endl << "With math.h is exp(" << x << ") = " << exp(x) << " and 1/exp(" << -x <<") = " << 1.0/exp(-x) << endl;
+    cout << endl << "Double: " << endl;
+    test<double>();
+    cout << endl << "Float: " << endl;
+    test<float>();
     return 0;
 }
 
@@ -53,4 +60,12 @@ T _calcLim(int n, int x) {
         step *= (T) 1 + ((T) x / (T) n);
     }
     return step;
+}
+
+template <typename T>
+void test() {
+    for (int i = 1; i <= 15; i++) {
+        T x = pow(10, -i);
+        cout << "1 - sqrt(1 - pow(" << x << ",2)) is " << 1 - sqrt(1 - pow(x, 2)) << " and pow(" << x << ") / (1 + sqrt(1 - pow(" << x << ", 2))) is " << pow(x, 2) / (1 + sqrt(1-pow(x,2))) << endl;
+    }
 }
